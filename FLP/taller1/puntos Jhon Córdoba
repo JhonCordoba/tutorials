@@ -1,0 +1,114 @@
+;;;;;;;;;;;Funciones auxiliares;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;buscarEnLista;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;buscarEnLista
+;;Propósito:
+;; Procedimiento que busca en una lista un objeto x, la lista puede estar formada por más listas y/o elementos
+;; y si está el objeto x en la lista, o en alguna de las sublistas, que a su vez puede estar formada
+;; por sublistas, entonces retorna true. De lo contrario retorna false
+(define (buscarEnLista lst objec)
+
+  (cond
+    [(empty? lst) #f]
+    [(equal? (car lst) objec) #t]
+    
+    [(list? (car lst))  (or (buscarEnLista (car lst) objec) (buscarEnLista (cdr lst) objec) ) ]
+    [else (buscarEnLista (cdr lst) objec)]
+    ))
+;;PRUEBAS
+;;(buscarEnLista  '(1 2 3 4) 4 ) ;;> true
+;;(buscarEnLista  '(1 2 3 4) 5 ) ;;> false
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;PUNTO 14;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;path
+;;Propósito:
+;; procedimiento que recibe un número y un árbol binario de busqueda representado con lista
+;; y retorna la ruta a tomar indicada con una lista de cadenas left y right hasta llegar a n
+;; si n está en el nodo raíz, el procedimiento retorna una lista vacía
+(define (path n BST)  (cond 
+                                      ;;caso base
+                                       [(empty? BST) '() ]
+
+                                       [(and (not (empty? (cdr BST) ))  (not (empty? (car (cdr BST))  ) )  (number? (car BST)) (equal? n (car (car (cdr BST))) ) ) '(left)]
+                                       
+                                       [(equal? n (car BST)) '()]
+
+                                       ;;izquierdo
+                                       [(and  (list? (car BST)) (buscarEnLista (car BST) n) ) (if  (not (equal? n (car(car BST))) )
+                                                                                                  (append  (list 'left) (path n (car BST) ) )
+                                                                                                  (path n (car BST) ) ) ]
+
+                                       
+
+                                       [(and (list? (car BST)) (list? (cdr BST)) (buscarEnLista (cdr BST) n) )  (append  (list 'right) (path n (cdr BST) ) ) ]
+                                       
+                                       
+
+                                       ;;de lo contrario es un número pero no es igual a n
+                                       [else  (cond
+                                                [(buscarEnLista (car (cdr BST) ) n )  (append (list 'left) (path n  (car (cdr BST) ) ) )  ] 
+                                              [(buscarEnLista (car (cdr (cdr BST) ) ) n )  (append (list 'right) (path n (car (cdr (cdr BST) )) ) )  ] 
+                                              )
+
+                                              ]) )
+;;PRUEBAS
+;;(path 17 '(14 (7 () (12 () ())) (26 (20 (17 () ()) ()) (31 () ()))  )) ;; -> (right left left)
+;;(path 13 '(8 (3 (1 () ()) (6 (4 () ()) (7 () ()))) (10 () (14 (13 () ()) ()))) ) ;; -> (list 'right 'right 'left)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;PUNTO 15;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;compose
+;;Propósito:
+;; procedimiento que recibe 2 argumentos, los cuales son procedimientos de un argumento, y un valor
+;;. Y retorna la composición de ambos procedimientos aplicados sobre val
+
+(define compose2
+(lambda (proc1  proc2)  (lambda (val) (proc1 (proc2 val) ) ) ) )
+;;PRUEBAS
+;;((compose2 number? car) '(1 b c d)) ;; -> true
+;;((compose2 car car) '( (1 2) b c d)) ;; -> 1
+;;((compose2 car cdr) '(a b c d)) ;; -> b
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;PUNTO 16;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;carCdr
+;;Propósito:
+;; procedimiento que recibe 3 argumentos, un elemento, una lista y un mensaje de error
+;;y retorna una lista de procedimientos, esa lista de procedimientos 
+;;toma una lista con la misma estructra que la que se pasó y devuelve el valor en la misma
+;;posición que la primera aparción del elemento en dicha lista
+
+(define (carCdr id lst fail)  (cond 
+                                      ;;caso base
+                                       [(empty? lst) fail]
+                                       [(equal? id (car lst)) "car"]
+
+                                       [(and (list? (car lst) ) (buscarEnLista (car lst) id) ) (string-append  "(compose " (carCdr id (car lst) fail)  " car)" )  ]
+                           
+                                       [(and (list? (car lst) ) (not (buscarEnLista (car lst) id) ) ) (string-append  "(compose " (carCdr id (cdr lst) fail)  " cdr)" )  ]
+
+                                       ;;El único caso que no abarcamos, es cuando simplemente
+                                       ;; es una lista de objetos, solo debemos buscar en ella:
+                                       [else (if (buscarEnLista (cdr lst) id)
+                                                 (string-append  "(compose " (carCdr id (cdr lst) fail)  " cdr)" )
+                                                 fail )  ]
+                                                 
+                                        ) ) 
+
+;;Pruebas
+;;(carCdr 'a '(a b c) 'fail) ;;-> car
+;;(carCdr 'c '(a b c) 'fail) ;;-> (compose (compose car cdr) cdr)
+;;(carCdr 'dog '(cat lion (fish dog ()) pig) 'fail) ;; -> (compose (compose (compose (compose car cdr) car) cdr) cdr)
+;;(carCdr 'dog '((fish dog ()) dog) 'fail) ;; -> (compose (compose car cdr) car)
+;;(carCdr 'dog '((dog) fish) 'fail) ;;-> (compose car car)
+;;(carCdr 'dog '(whale (cat) ((mouse ((dog) snake) fish) cow) (dog fish)) 'fail) ;;-> (compose (compose (compose (compose (compose (compose (compose car car) car) cdr) car) car) cdr) cdr)
+;;(carCdr 'a' () 'fail) ;;-> 'fail
+
+;;(carCdr 'b '(a b c d) 'fail)  ;; -> (compose car cdr)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

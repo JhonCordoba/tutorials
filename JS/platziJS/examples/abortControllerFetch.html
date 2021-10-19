@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abort a fetch request</title>
+</head>
+<body>
+    <p><em>Abre la consola</em></p>
+
+    <div>
+        <button id="loadButton">Load</button>
+        <button id="abortButton">Abort</button>
+        <img height="400" id="img" >
+    </div>
+    
+
+    <script>
+        const abortController = new AbortController();
+        const loadButton = document.querySelector("#loadButton");
+        const abortButton = document.querySelector("#abortButton");
+        const url = "https://images.pexels.com/photos/974470/nature-stars-milky-way-galaxy-974470.jpeg?q=100";
+        const img = document.querySelector("#img");
+
+        loadButton.onclick = async function(){
+            startLoading();
+            try{
+                const response = await fetch(url, {signal: abortController.signal});
+                const blob = await response.blob();
+                const imgURL = URL.createObjectURL(blob);
+                img.src = imgURL;
+            }catch(error){
+                console.log(error.message);
+            }
+            stopLoading();
+        }
+
+        abortButton.onclick = async function(){
+            stopLoading();
+        }
+
+        function stopLoading(){
+            abortController.abort();
+            loadButton.innerText = "load huge img...";
+            loadButton.disable = false;
+        }
+
+        function startLoading(){
+         loadButton.innerText = "Loading..."
+         loadButton.disable = true;
+         abortButton.disable = false;
+        }
+    </script>
+</body>
+</html>

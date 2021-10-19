@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patrónes de diseño</title>
+    <style>
+        span{
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Patrónes de diseño</h1>
+    <h2>¿Qué es un patrón de diseño?</h2>
+    <p>
+        Son soluciones definidas a un problema recurrente.
+        Un patrón de diseño resulta ser una solución a un problema de diseño. Para que una solución sea considerada un patrón debe poseer ciertas características. Una de ellas es que debe haber comprobado su efectividad resolviendo problemas similares en ocasiones anteriores. Otra es que debe ser reutilizable, lo que significa que es aplicable a diferentes problemas de diseño en distintas circunstancias
+        La idea de los patrónes comienza en la arquitectura con Christopher Alexander. Sus libros (The timeless way of building y A pattern Language) describen patrones para construir arquitectura dinámica, como casas, pueblos y ciudades.
+    </p>
+
+    <p style="text-align: center; font-size: 2em;">
+        "Patterns, like all forms of complexity, should be avoided until they are absolutely necessary"
+    </p>
+
+    <p>
+        <h2>Se agrupan en 3 grandes grupos, se listan los más utilizados por cada grupo: </h2>
+        <ol>
+            <li>
+                <h3>Patrónes de diseño creacionales</h3>
+                <p>Proveen diferentes mecanismos para crear objetos</p>
+                <ul>
+                    <li>
+                        Abstract Factory
+                    </li>
+                    <li>
+                        <span>Builder:</span> Es usado para permitir la creación de una variedad de objetos complejos desde un objeto básico o fuente. Separa la creación de un objeto complejo de su estructura, de tal forma que el mismo proceso de construcción puede servir para crear representaciones diferentes.
+                    </li>
+                    <li>
+                        Factory Method
+                    </li>
+                    <li>
+                        Prototype
+                    </li>
+                    <li>
+                        <span> Singleton: </span> Es un patrón que te asegura que una clase solo tiene una instancia. Esta única instancia puede ser  consumida por cualquiero otro objeto.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3>Patrónes de diseño estructurales</h3>
+                <p>Describen formas de componer objetos para formar nuevas estructuras flexibles y eficientes</p>
+                <ul>
+                    <li>
+                        Adapter
+                    </li>
+                    <li>
+                        Bridge
+                    </li>
+                    <li>
+                        Composite
+                    </li>
+                    <li>
+                        Decorator
+                    </li>
+                    <li>
+                        Facade
+                    </li>
+                    <li>
+                        Flyweight
+                    </li>
+                    <li>
+                        Proxy
+                    </li>
+                </ul>
+                
+            </li>
+            <li> 
+                <h3>Patrónes de diseño de comportamiento</h3>
+                <p>
+                    Gestionan algoritmos y responsabilidades entre objetos.
+                </p>
+                <ul>
+                    <li>
+                        Chain of Responsibility
+                    </li>
+                    <li>
+                        Command
+                    </li>
+                    <li>
+                        Interpreter
+                    </li>
+                    <li>
+                        Iterator
+                    </li>
+                    <li>
+                        Mediator
+                    </li>
+                    <li>
+                        Memento
+                    </li>
+                    <li>
+                        <span>Observer:</span> consiste de 2 participantes, un sujeto y unos observadores. El sujeto ofrece un mecanismo de subscripción, y los observadores son los que se subscriben, estos reciben notificaciones. Cuando quieran se pueden dar de baja. El obsevador debe prometernos tener un método update, para que el sujeto llame a este método con la información a actualizar cada vez que hayan cambios.
+                    </li>
+                    <li>
+                        State
+                    </li>
+                    <li>
+                        Strategy
+                    </li>
+                    <li>
+                        Template Method
+                    </li>
+                    <li>
+                        Visitor
+                    </li>
+                </ul>
+            </li>
+        </ol>
+    </p>
+
+    
+</body>
+</html>

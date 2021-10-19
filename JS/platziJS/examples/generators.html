@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generators</title>
+    <style>
+        p{
+            position: absolute;
+            top: 45%;
+            width: 100%;
+            font-size: 2em;
+            text-align: center;
+            cursor: pointer;
+        }
+        p:hover{
+            color: white;
+            background-color: black;
+        }
+        h1{
+            color: red;
+            text-align: center;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>Generators</h1>
+    <p>
+        <h2>
+            Mis apuntes:
+        </h2>
+        <ul>
+            <li>para crear un generator function, debemos agregar un * pegado al keyword function: function* myGenerator(){...}</li>
+            <li>los generadores se prestan para crear funciones eficientes en memoria</li>
+            <li>una función definida como generator (function*), no es ejecutable en sí, se llama y retorna el generator que utilizamos por medio de funciones como .next(), const gen = generador(); gen.next();</li>
+            <li>los generadores empiezan suspendidos y se tiene que llamar a next para que se ejecuten hasta su primero yield</li>
+            <li>cada vez que llamamos a next(), esto retorna un value (el idnicado en el yield) y un boolean que indica si ya terminó la ejecución del generator</li>
+        </ul>
+    </p>
+
+    <h2>
+        Práctica:
+    </h2>
+    <p id="console">console</p>
+
+    <button onclick="nextToMyGenerator()">next()</button>
+
+    <script>
+
+        window.mySimpleGenerator = simpleGenerator();
+
+        function* simpleGenerator(){
+            showInConsole("GENERATOR START");
+            yield 1;//mi valor 1
+            yield "mi valor 2";
+            showInConsole("GENERATOR END")
+        }
+
+        function showInConsole(text, idConsole = "console"){
+            console.log(text);
+            document.querySelector("#console").innerHTML = document.querySelector("#console").innerHTML + "<br/>" + text;
+        }
+
+        function nextToMyGenerator(){
+            let result =  window.mySimpleGenerator.next();
+            showInConsole( "value: " + result.value + " done: "  + result.done  );
+        }
+
+
+    </script>
+</body>
+</html>
