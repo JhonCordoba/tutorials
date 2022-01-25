@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Holy Grail Layout</title>
+</head>
+<style type="text/css">
+	*{
+		text-align: center;
+	}
+	html, body{
+		height:  100%;
+		width: 100%;
+	}
+	.parent{
+		display:  grid; /*row-header row-main row-footer / column-header column-main column-footer*/
+		grid-template:  auto 1fr auto / auto 1fr auto;
+		background-color: lightblue;
+		height: 100%;
+	}
+
+	header{
+		grid-column:  1 / 4;
+		background-color: lightgreen;
+	}
+
+	.left-side{
+		grid-column:  1 / 2;
+		background-color: ping;
+	}
+	footer{
+		background-color: orange;
+		grid-column:  1 / 4;
+	}
+	aside{
+		background-color: red;
+	}
+
+</style>
+<body>
+	<div class="parent">
+		<header>
+			header
+		</header>
+
+		<aside class="left-side">
+			left aside
+		</aside>
+
+		<main>
+			main content
+		</main>
+
+		<aside>
+			right sidebar
+		</aside>
+
+		<footer>
+			footer
+		</footer>
+	</div>
+</body>
+</html>

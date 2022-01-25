@@ -4,9 +4,24 @@ self.addEventListener("push", (event: any) => {
 	const data = event.data.json();
 	console.log(data);
 	console.log("Notificación recibida");
-	//@ts-ignore
-	self.registration.showNotification(data.title, {
-		body: data.body,
-		icon: "https://img1.freepng.es/20180414/vle/kisspng-arch-linux-installation-btrfs-computer-software-archery-5ad1b76b915298.4679673115236934195953.jpg",
-	});
+
+	// Let's check whether notification permissions have already been granted
+	if (Notification.permission === "denied") {
+		Notification.requestPermission().then(function (permission) {
+			// If the user accepts, let's create a notification
+			if (permission === "granted") {
+				//@ts-ignore
+				self.registration.showNotification(data.title, {
+					body: data.body,
+					icon: data.icon,
+				});
+			}
+		});
+	} else {
+		//@ts-ignore
+		self.registration.showNotification(data.title, {
+			body: data.body,
+			icon: data.icon,
+		});
+	}
 });

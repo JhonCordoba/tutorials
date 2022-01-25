@@ -1,0 +1,19 @@
+{
+    "type": "mysql",
+    "host": "localhost",
+    "port": 3306,
+    "username": "AnswerTIC",
+    "password": "AnswerTIC",
+    "database": "notification_system",
+    "synchronize": true,
+    "autoLoadEntities": true,
+    "loggin": true,
+    "migrationTableName": "migration",
+    "entities": ["dist/**/*.entity.js"],
+    "migrations": ["src/migrations/**/*.js"],
+    "cli": {
+        "entitiesDir": "dist/entities",
+        "migrationsDir": "src/migrations"
+      }
+
+}

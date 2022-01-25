@@ -1,1 +1,3 @@
 /node_modules
+/dist
+/src/service-account-key.json

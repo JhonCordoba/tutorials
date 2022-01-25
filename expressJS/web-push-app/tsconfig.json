@@ -1,13 +1,16 @@
 {
     "compilerOptions": {
+
       "outDir": "dist",
-      "target": "esnext",
+      "target": "es2015",
       "module": "commonjs",
       "strict": true,
       "jsx": "preserve",
       "importHelpers": true,
-      "moduleResolution": "node",
+      "moduleResolution": "Node",
+      "resolveJsonModule": true,
       "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
       "allowJs": true,
       "esModuleInterop": true,
       "allowSyntheticDefaultImports": true,
@@ -15,6 +18,7 @@
       "baseUrl": ".",
       "removeComments": true,
       "types": [
+        "node"
       ],
       "paths": {
         "@/*": [
