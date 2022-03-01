@@ -1,0 +1,1 @@
+minizinc --solver osicbc Relleno.mzn Datos.dzn

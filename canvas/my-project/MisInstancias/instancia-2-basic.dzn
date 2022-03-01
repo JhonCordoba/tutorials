@@ -1,0 +1,286 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{hyperref}
+
+\usepackage{multicol}
+\setlength{\columnsep}{1cm}
+
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+\title{Proyecto del curso: Complejidad y Optimización de Algoritmos. As far as possible from nearest city}
+\author{Jhon Alejandro Córdoba Figueroa}
+\date{February 2022}
+
+
+\begin{document}
+
+\maketitle
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introducción}
+
+La región EcoReg tiene un problema serio de depósito de basuras, y ha decidido construir un nuevo relleno dentro de sus fronteras, con el fin de encontrar la ubicación óptima para el relleno sanitario, se ha implementado el modelo descrito en este documento. Se considera ubicación óptima, a la ubicación que corresponde a la más alejada de la ciudad más cercana. A continuación se describe el modelo y sus características como parámetros, variables, restricciones, función objetivo, análisis y conclusiones.
+
+Para entender con mayor facilidad el problema y el modelo aquí planteado, se recomienda primero ver el vídeo que se encuentra en el siguiente enlace: \href{http://www.latex-tutorial.com}{LaTeX-Tutorial}.
+
+\section{Modelo}
+
+\subsection{Parámetros}
+Sea $n$ (sizeOfSquareRegion) una variable de decisión tipo entera que representa el tamaño de la región, al ser una región cuadrada basta con esta única variable para representar el tamaño.
+
+Sea $m$ (amountOfCities) una variable de decisión tipo entera que representa la cantidad de ciudades en la región.
+
+Sea $locations$ una matriz de tamaño $m$x$2$, tal que $i \in locations$.
+
+\begin{itemize}
+    \item $location_i$: representa la ubicación de la ciudad $i$. $location_i$ es un vector tipo entero de tamaño 2, donde el primer elemento representa representa la ubicación en el Este y el segundo, la ubicación en el Oeste.
+\end{itemize}
+
+\subsection{Variables}
+
+\begin{itemize}
+ \item $landfillWest$: representa la posición Este del relleno sanitario.
+ 
+  \item $landfillSouth$: representa la posición Oeste del relleno sanitario.
+  
+   \item $nearestCity$: representa el index de la ciudad más cercana en la matriz $locations$
+\end{itemize}
+
+
+\subsection{Restricciones}
+
+\begin{itemize}
+    \item $landfillWest, landfillSouth \geq 0$
+    \item $landfillWest, landfillSouth \leq n (sizeOfSquareRegion)$
+    
+    \item $\forall i \in locations, locations_i[0] \neq landfillWest$
+    
+    \item $\forall i \in locations, locations_i[1] \neq landfillSouth$
+    
+    \item $\forall i \in locations, 
+    |(landfillWest - nearestCity[0])| + |landfillSouth - nearestCity[1]| 
+    \leq 
+    |(landfillWest - locations_i[0])| + |(landfillSouth - locations_i[1])| $
+\end{itemize}
+
+
+\subsection{Función Objetivo}
+\begin{itemize}
+    \item Maximizar la distancia medida con el \textbf{método de Manhattan} entre el punto del relleno sanitario y la ciudad que esté más cercana a dicho punto. Las restricciones garantizan que no hay otra ciudad que pueda estar más cerca y a su vez tener la mayor distancia:
+    
+    Maximice: $|(landfillWest - nearestCity[0])| + |(landfillSouth - nearestCity[1]) |$
+    
+\end{itemize}
+
+
+\subsection{Explicación del modelo, detalles importantes}
+
+El modelo representa la problemática de la región EcoReg representando los parámetros y variables de decisión necesarios, descritos anteriormente. Lo importante aquí y que se debe resaltar del modelo, es que se puede obtener una solución al problema principalmente por la restricción que primero garantiza la selección de una ciudad más cercana que a su vez debe cumplir la condición de tener la distancia más alejada posible, esta última condición, de tener la mayor distancia posible, está implícita en la maximización de la función objetivo y la restricción de seleccionar la ciudad más cercana se logra gracias al forall que calcula la distancia utilizando el método de Manhattan sobre la variable de decisión $nearestCity$ y el $landFill$ indicando que dicha distancia debe ser menor entre el resto de ciudades y el landfill.
+    
+En otras palabras, la restricción mencionada anteriormente, es la que garantiza que el solver encuentre el punto del $landFill$, tal que, haya la distancia más grande posible entre la ciudad más cercana y el $landFill$, calculando la distancia de manhattan y a su vez maximizando la distancia entre dicha ciudad y el punto del relleno sanitario.
+
+\newpage
+\section{Pruebas}
+A continuación se describen las pruebas realizadas a la implementación del modelo plateado.
+
+\begin{multicols}{2}
+\subsection{Prueba 1}
+\begin{center}
+sizeOfSquareRegion = 5;
+amountOfCities =  2;
+    locations = [
+    1,5; 
+    2,4
+    ];
+    
+    
+\includegraphics[width=5cm, height=5cm]{images/instancia-1}
+\end{center}
+
+\subsection{Prueba 2}
+\begin{center}
+sizeOfSquareRegion = 3;
+amountOfCities =  1;
+locations = [1, 1];
+    
+
+\includegraphics[width=5cm, height=5cm]{images/instancia-2.png}
+\end{center}
+
+
+\subsection{Prueba 3}
+\begin{center}
+sizeOfSquareRegion = 10;
+amountOfCities =  12;
+locations = [1, 1
+ ;2, 2
+ ;3, 3
+ ;4, 4
+ ;6, 6
+ ;7, 7
+ ;8, 8
+ ;9, 9
+ ;10, 10
+ ;0, 10
+ ;10, 0
+ ;10, 10];
+
+
+\includegraphics[width=5cm, height=5cm]{images/instancia-3}
+\end{center}
+
+\subsection{Prueba 4}
+\begin{center}
+sizeOfSquareRegion = 10;
+amountOfCities =  12;
+locations = [1, 1
+ ;2,2
+ ;3,3
+ ;4,4
+ ;6,6
+ ;7,7
+ ;8,8
+ ;9,9
+ ;10,10
+ ;0,10
+ ;10,0
+ ;10,10];
+ 
+ 
+ \includegraphics[width=5cm, height=5cm]{images/instancia-4}
+\end{center}
+
+\subsection{Prueba 5}
+\begin{center}
+sizeOfSquareRegion = 20;
+amountOfCities =  7;
+locations = [;1,1
+ ;1,2
+ ;1,3
+ ;1,4
+ ;1,5
+ ;1,6
+ ;1,7];
+ 
+ 
+ \includegraphics[width=5cm, height=5cm]{images/instancia-5}
+\end{center}
+
+
+\subsection{Prueba 6}
+\begin{center}
+sizeOfSquareRegion = 10;
+amountOfCities =  5;
+locations = [5, 5
+ ;0, 0
+ ;10, 0
+ ;10, 10
+ ;0, 10
+ ;];
+
+
+\includegraphics[width=5cm, height=5cm]{images/instancia-6}
+\end{center}
+
+\subsection{Prueba 7}
+\begin{center}
+ sizeOfSquareRegion = 10;
+ amountOfCities =  4;
+ locations = [0, 0
+ ;10, 0
+ ;10, 10
+ ;0, 10
+ ;];
+ 
+ \includegraphics[width=5cm, height=5cm]{images/instancia-7}
+\end{center}
+
+\subsection{Prueba 8}
+\begin{center}
+sizeOfSquareRegion = 3;
+amountOfCities =  3;
+locations = [0, 0
+ ;2, 3
+ ;3, 0
+ ;];
+ 
+
+ \includegraphics[width=5cm, height=5cm]{images/instancia-8}
+\end{center}
+
+\subsection{Prueba 9}
+\begin{center}
+sizeOfSquareRegion = 10;
+amountOfCities =  6;
+locations = [0, 0
+ ;0, 5
+ ;5, 5
+ ;7, 0
+ ;1, 1
+ ;10, 10
+ ;];
+ 
+ 
+\includegraphics[width=5cm, height=5cm]{images/instancia-9}
+\end{center}
+
+\subsection{Prueba 10}
+\begin{center}
+sizeOfSquareRegion = 3;
+amountOfCities =  4;
+locations = [1, 1
+ ;2, 2
+ ;3, 3
+ ;3, 0
+ ;];
+
+
+\includegraphics[width=5cm, height=5cm]{images/instancia-10}
+\end{center}
+
+\end{multicols}
+
+\section{Análisis y Conclusión}
+
+Para analizar las pruebas realizadas, se ejecutó 5 veces cada prueba y se calculó el tiempo promedio de ejecución de cada una de ellas, ya que cada vez que lo ejecutaba daba un tiempo diferente, por lo tanto utilizando el promedio se intentó trabajar con valores más aproximados a la realidad o más correctos. Luego se creó una tabla teniendo en cuenta el \# de prueba, tamaño de la entrada y el promedio de ejecución mencionado. Luego se graficó la función tiempo de ejecución:
+
+
+Sea $n$ es el tamaño de la entrada y $t$ el tiempo de ejecución en milisegundos 
+\[ 
+F(n) = t
+\]
+
+\begin{center}
+\begin{tabular}{|c | c| c|}
+\hline
+\# de prueba & tamaño de entrada & promedio tiempo de ejecución (ms)\\
+\hline
+\# 2 & 1 & 287 \\
+\# 1 & 2 & 301 \\ 
+\# 8 & 3 & 307\\
+\# 10 & 4 & 308\\
+\# 7 & 4 & 283\\
+\# 4 & 5 & 305 \\
+\# 6 & 5 & 343\\
+\# 9 & 6 & 317\\
+\# 5 & 7 & 297\\
+\# 3 & 12 & 457 \\
+$dat20_1$ & 20 & 469 \\
+
+
+\hline
+\end{tabular}
+
+\includegraphics[width=6cm, height=6cm]{images/graphic-input-runtime.png}
+
+\end{center}
+
+Con lo cual se observa que en este modelo, el tiempo de ejecución no está determinado solo por el tamaño de la entrada, porque aunque hay una relación entre estas 2 variables, hay casos como el de la \textbf{Prueba 5} que con 7 datos de entrada logró obtener un mejor tiempo promedio de ejecución que el de la \textbf{ Prueba 1 }, al parecer el tiempo de ejecución está más relacionado con la complejidad de hallar el punto óptimo para el landfill que con la cantidad de datos de entrada, lo cual no es lo mismo, porque podemos tener una entrada \textbf{ n } grande; pero con una solución "obvia" porque todos los puntos están concentrados, por ejemplo en la parte superior de la región, el solver rápidamente encuentra que el punto óptimo está en la parte más superior de la región.
+
+
+\end{document}

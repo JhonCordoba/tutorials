@@ -1,0 +1,11 @@
+%En el modelo que utiliza la GUI, los parámetros n y m tienen nombres sizeOfSquareRegion y amountOfCities respectivamente,
+% con el fin de aumentar la legibilidad del código.
+%Sin embargo, aquí se utiliza n y m para cumplir con el contrato.
+
+
+      n = 5;
+      m =  2;
+      locations = [|1, 5
+ |2, 4
+ |];
+    

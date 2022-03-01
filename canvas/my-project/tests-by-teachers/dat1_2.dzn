@@ -1,0 +1,3 @@
+sizeOfSquareRegion=10;
+amountOfCities=1;
+locations=[|5, 5|];

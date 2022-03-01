@@ -1,0 +1,8 @@
+
+      sizeOfSquareRegion = 3;
+      amountOfCities =  3;
+      locations = [|0, 0
+ |2, 3
+ |3, 0
+ |];
+    

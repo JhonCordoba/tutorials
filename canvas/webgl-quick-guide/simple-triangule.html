@@ -1,0 +1,140 @@
+<!--
+
+If you observe the above program carefully, we have followed five sequential steps to draw a simple triangle using WebGL. The steps are as follows −
+
+Step 1 − Prepare the canvas and get WebGL rendering context
+
+We get the current HTML canvas object and obtain its WebGL rendering context.
+
+Step 2 − Define the geometry and store it in buffer objects
+
+We define the attributes of the geometry such as vertices, indices, color, etc., and store them in the JavaScript arrays. Then, we create one or more buffer objects and pass the arrays containing the data to the respective buffer object. In the example, we store the vertices of the triangle in a JavaScript array and pass this array to a vertex buffer object.
+
+Step 3 − Create and compile Shader programs
+
+We write vertex shader and fragment shader programs, compile them, and create a combined program by linking these two programs.
+
+Step 4 − Associate the shader programs with buffer objects
+
+We associate the buffer objects and the combined shader program.
+
+Step 5 − Drawing the required object (triangle)
+
+This step includes operations such as clearing the color, clearing the buffer bit, enabling the depth test, setting the view port, etc. Finally, you need to draw the required primitives using one of the methods − drawArrays() or drawElements().
+
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Simple Triangle</title>
+</head>
+<body>
+
+	<canvas width="300" height="300" id="myCanvas"></canvas>
+
+
+	<script type="text/javascript">
+		/* Step1: Prepare the canvas and get WebGL context */
+		const canvas = document.getElementById("myCanvas");
+		const gl = canvas.getContext("webgl");
+
+		/* Step2: Define the geometry and store it in buffer objects */
+		const vertices = [-0.5, 0.5, -0.5, -0.5, 0.0, -0.5];
+
+		//create a new buffer object
+		const vertexBuffer = gl.createBuffer();
+
+		//bind an empty array buffer to it
+		gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+
+		//pass the vertices data to the buffer
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+
+
+		//unbind the buffer
+		gl.bindBuffer(gl.ARRAY_BUFFER, null);
+
+		/* Step3: Create and compile Shader programs */
+
+		//vertex shader source code
+		const vertCode = 
+			'attribute vec2 coordinates;'+
+			'void main(void){ gl_Position = vec4(coordinates, 0.0, 1.0); }'
+
+		//create a vertex shader object
+		const vertShader = gl.createShader(gl.VERTEX_SHADER);
+
+		//attach vertex shader source code
+		gl.shaderSource( vertShader, vertCode );
+
+		//Compile the vertex shader
+		gl.compileShader(vertShader);
+
+		//Fragment shader source code
+		const fragCode = 'void main(void){ gl_FragColor = vec4(0.0, 0.0, 0.0, 0.1); }'
+
+		//create fragment shader object
+		const fragShader = gl.createShader(gl.FRAGMENT_SHADER);
+
+		//attach fragment shader source code
+		gl.shaderSource(fragShader, fragCode);
+
+		//compile the gragment shader
+		gl.compileShader(fragShader);
+
+
+		//create a shader program object to store combined shader program
+		const shaderProgram = gl.createProgram();
+
+		//attach a vertex shader
+		gl.attachShader(shaderProgram, vertShader);
+
+		//attach a fragment shader
+		gl.attachShader(shaderProgram, fragShader);
+
+		//link both programs
+		gl.linkProgram(shaderProgram);
+
+
+		//use the combined shader program object
+		gl.useProgram(shaderProgram);
+
+		/* Step 4: Associate the shader programs to buffer objects */
+
+		//bind vertex buffer object
+		gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+
+		//get the attribute location
+		var coord = gl.getAttribLocation(shaderProgram, "coordinates");
+
+		//point an attribute to the currently bound VBO
+		gl.vertexAttribPointer(coord, 2, gl.FLOAT, false, 0, 0);
+
+		//enable the attribute
+		gl.enableVertexAttribArray(coord);
+
+		/* Step5: Drawing the required object (triangle) */
+
+		//clear the canvas
+		gl.clearColor(0.5, 0.5, 0.5, 0.9);
+
+		//enable the depth test
+		gl.enable(gl.DEPTH_TEST);
+
+		//clear the color buffer bit
+		gl.clear(gl.COLOR_BUFFER_BIT);
+
+		//set the view port
+		gl.viewport(0,0,canvas.width, canvas.height);
+
+		//draw the triangle
+		gl.drawArrays(gl.TRIANGLES, 0, 3);
+	</script>
+
+
+
+</body>
+</html>

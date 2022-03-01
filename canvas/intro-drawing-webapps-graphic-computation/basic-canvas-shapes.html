@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Canvas Shapes</title>
+
+	<style type="text/css">
+		canvas{
+			border: 1px solid black;
+		}
+	</style>
+
+</head>
+<body>
+	<canvas width="500" height="500">
+		Your browser doesn't support canvas
+	</canvas>
+
+	<script type="text/javascript">
+
+		//helpers:
+		function degToRad(degrees) {
+		  return degrees * Math.PI / 180;
+		};
+		//
+
+		//Get the canvas
+		canvas = document.querySelector("canvas");
+
+		//get the 2d canvas context
+		ctx = canvas.getContext("2d");
+
+		//set fill color
+		ctx.fillStyle = 'rgb(255, 0, 0)';
+		//set outline color
+		ctx.strokeStyle = 'rgb(255, 0, 0)';
+
+		//set line width to 5 px
+		ctx.lineWidth = 5;
+
+		//draw a circle (x,y,radio,startDegree, finalDegree)
+		ctx.arc(250, 250, 100, 0, Math.PI * 2);
+		ctx.fill();
+
+
+		//draw a line
+
+		//draw a triangle
+		ctx.beginPath();
+		ctx.lineTo(150, 50);
+		const triHeight = 50 * Math.tan(degToRad(60));
+		ctx.lineTo(100, 50+triHeight);
+		ctx.lineTo(50, 50);
+		ctx.fill();
+
+		//draw a blue circle
+		ctx.fillStyle = 'rgb(0, 0, 255)';
+		ctx.beginPath();
+		ctx.arc(200, 106, 50, degToRad(0), degToRad(360), false);
+		ctx.fill();
+
+		//draw a pacman
+		ctx.fillStyle = 'yellow';
+		ctx.beginPath();
+		ctx.arc(200, 106, 50, degToRad(-45), degToRad(45), true);
+		ctx.lineTo(200, 106);
+		ctx.fill();
+
+
+		//stroke text
+		ctx.strokeStyle = "black";
+		ctx.lineWidth = 1;
+		ctx.font = '36px arial';
+		ctx.strokeText("My stroke canvas Text", 50, 40)
+
+		//fill text
+		ctx.fillStyle = "red"
+		ctx.font = "48px georgia";
+		ctx.fillText("My fill canvas text", 50, 400);
+
+	</script>
+</body>
+</html>

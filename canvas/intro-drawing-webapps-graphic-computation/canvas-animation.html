@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Canvas animation</title>
+	<style type="text/css">
+		body{
+
+			margin: 0;
+			overflow: hidden;
+			background-color: black;
+		}
+		canvas{
+		}
+	</style>
+</head>
+<body>
+
+ <canvas>
+ 	Your browser doesn't support Canvas.
+ </canvas>
+
+ <script type="text/javascript">
+ 	const canvas = document.querySelector("canvas");
+ 	const canvasWidth = canvas.width = window.innerWidth;
+ 	const canvasHeight = canvas.height = window.innerHeight;
+
+
+ 	const ctx = canvas.getContext("2d");
+ 	ctx.translate(canvasWidth/2, canvasHeight/2);
+
+ 	ctx.arc(0, 0, 30, 0,  Math.PI * 2);
+ 	ctx.fill();
+
+ 	function degToRad(degrees){
+ 		return degrees * Math.PI / 180;
+ 	}
+
+ 	function rand(min, max){
+ 		return Math.floor(Math.random() * (max - min + 1)) + min;
+ 	}
+
+ 	let length = 250;
+ 	let moveOffset = 20;
+ 	let i = 0;
+
+ 	function draw(){
+ 		if(i >= length){
+ 			length = 250;
+ 			moveOffset = 20;
+ 			i = 0;
+ 			
+ 			//ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+			ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
+			ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+ 		};
+
+ 		ctx.arc(0, 0, length, 0,  Math.PI * 2);
+	 	ctx.fill();
+
+
+	 	ctx.fillStyle = 'rgba(' + (255-length) + ', 0, ' +(255 - length) + ', 0.9) ';
+	 	ctx.beginPath();
+	 	ctx.moveTo( moveOffset, moveOffset );
+	 	ctx.lineTo( moveOffset + length, moveOffset );
+	 	const triHeight = length/2 * Math.tan( degToRad(60) );
+	 	ctx.lineTo( moveOffset + (length/2), moveOffset+triHeight );
+	 	ctx.lineTo(moveOffset, moveOffset);
+	 	ctx.fill();
+
+	 	length--;
+	 	moveOffset += 0.7;
+	 	ctx.rotate( degToRad(5) );
+
+ 		window.requestAnimationFrame(draw);
+ 	}
+
+ 	draw();
+
+ </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>cross, understanding moveTo</title>
+
+
+</head>
+<body>
+	<canvas></canvas>
+
+	<script type="text/javascript">
+		const canvas = document.querySelector("canvas");
+
+		const height = canvas.height = 400;
+		const width = canvas.width = 400;
+
+
+		const ctx = canvas.getContext("2d");
+
+
+		//(0,0) in center of the canvas
+		ctx.translate(200, 200);
+
+		//new free draw
+		ctx.beginPath();
+
+		//start point of the line:
+		ctx.moveTo(-200,0);
+		
+		//draw line from startPoint (-200, 0) to endPoint (200,0)
+		ctx.lineTo(200,0);
+
+
+		//start point of the other line:
+		ctx.moveTo( 0, -200 );
+
+		//draw line from startPoint (0,200) to endPoint (0,200)
+		ctx.lineTo(0,200);
+
+		//show lines in screen
+		ctx.stroke();
+	</script>
+</body>
+</html>
