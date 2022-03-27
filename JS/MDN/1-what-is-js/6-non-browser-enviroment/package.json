@@ -1,0 +1,11 @@
+{
+  "name": "hello-world-node-server",
+  "version": "1.0.0",
+  "description": "it is a simple hello world http server, using only nodeJS (without expressJS), this is only a simple JavaScript non browser enviroment demostration",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

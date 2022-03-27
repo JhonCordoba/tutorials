@@ -1,0 +1,13 @@
+Ligero significa que está diseñado para ser simple, para consumir la menor cantidad de recursos disponibles, ser fácil de aprender.
+
+Un buen indicador podría ser el número de palabras reservadas:
+C# = 77
+Java = 67
+EmacScript = 51
+Python = 33
+
+Otro posible buen indicador es la cantidad de memoria mínima utilizada por las máquinas virtuales:
+JVM = 240 MB
+V8 = 12 MB
+
+Esto es un concepto subjectivo, por lo tanto no le dedicaré mucho tiempo. Algunos programadores incluso dicen que JS no es lightweight, ver la imágen en la carpeta fixings.
