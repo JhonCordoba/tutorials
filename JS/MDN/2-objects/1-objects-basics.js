@@ -34,17 +34,35 @@ person.introduceSelf();
 //Dot notation vs bracket notation:
 console.log(`Using bracket notaion: Hello ${person["name"]["first"]}`);
 
-//create new members:
+//create new members (using bracket notation allow dynamism, i mean, create properties according to input):
 person['height'] = 1.75;
 
 console.log(`The ${ person["name"]["first"]  }'s height is ${ person.height } `);
 
 
-//constructors
+//constructors with "new":
+//create a new object
+//bind the new object to "this"
+//run the constructor code
+//return the new object
 function Person(name){
 	this.name =  name;
 	this.introduceSelf = function(){
 		console.log(`Hi! I'm ${ this.name }. `);
+	}
+}
+
+
+//function Person vs class Person:
+const test1 = new Test1();
+function Test1(){
+	console.log("A Test1 has been created!");
+};
+
+// const test2 = new Test2(); // ReferenceError
+class Test2{
+	constructor(){
+		console.log("A Test2 has been created!");
 	}
 }
 

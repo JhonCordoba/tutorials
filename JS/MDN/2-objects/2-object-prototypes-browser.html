@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Prototype in browser</title>
+</head>
+<body>
+
+ <script type="text/javascript">
+ 	
+ 	const myObject = {
+	city: "Cali",
+		greet(){
+			console.log(`Greeting from ${this.city}`);
+		}
+	}
+
+	myObject.greet();
+
+	console.log(myObject);
+
+	//console.log(myObject.__proto__);
+	console.log(Object.getPrototypeOf(myObject)); //this is the right way
+
+	console.log(myObject.__proto__.toString());
+ </script>
+
+</body>
+</html>
