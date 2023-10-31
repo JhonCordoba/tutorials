@@ -1,0 +1,33 @@
+body{
+	background-color: #fcbbae;
+}
+
+* {
+	font-size: 1.1em;
+	text-align: center;
+	padding-top: 1.1em;
+}
+
+p {
+  line-height: 1.4;
+}
+
+a {
+  outline: none;
+}
+
+a:hover {
+  text-decoration: none;
+  background: #cdfeaa;
+}
+
+input[type='submit'] {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
